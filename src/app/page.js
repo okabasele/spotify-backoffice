@@ -1,101 +1,145 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+import DataTable from "@/components/DataTable";
+import { createColumnHelper } from "@tanstack/react-table";
+import { FileAudio, Pencil, X } from "lucide-react";
+import Link from "next/link";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+const SpotifyPortal = () => {
+  const audioData = [
+    {
+      id: 1,
+      titre: "Hello",
+      duree: "3:30",
+      id_Album: 1,
+      explicit: false,
+      paroles: "Hello, it's me",
+      id_Artiste: 1,
+      credit: "Adele",
+      nb_ecoute: 1000000,
+      popularite: 100,
+      audio: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    },
+    {
+      id: 2,
+      titre: "Rolling in the Deep",
+      duree: "4:30",
+      id_Album: 1,
+      explicit: false,
+      paroles: "There's a fire starting in my heart",
+      id_Artiste: 1,
+      credit: "Adele",
+      nb_ecoute: 1000000,
+      popularite: 100,
+      audio: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    },
+    {
+      id: 3,
+      titre: "Someone Like You",
+      duree: "4:30",
+      id_Album: 1,
+      explicit: false,
+      paroles: "I heard that you're settled down",
+      id_Artiste: 1,
+      credit: "Adele",
+      nb_ecoute: 1000000,
+      popularite: 100,
+      audio: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    },
+    {
+      id: 4,
+      titre: "Set Fire to the Rain",
+      duree: "4:30",
+      id_Album: 1,
+      explicit: false,
+      paroles: "I let it fall, my heart",
+      id_Artiste: 1,
+      credit: "Adele",
+      nb_ecoute: 1000000,
+      popularite: 100,
+      audio: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    },
+    {
+      id: 5,
+      titre: "Skyfall",
+      duree: "4:30",
+      id_Album: 1,
+      explicit: false,
+      paroles: "This is the end",
+      id_Artiste: 1,
+      credit: "Adele",
+      nb_ecoute: 1000000,
+      popularite: 100,
+      audio: "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    },
+  ];
+
+  const columnHelper = createColumnHelper();
+
+  const columns = [
+    columnHelper.accessor("id", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("titre", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("duree", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("id_Album", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("explicit", {
+      cell: (info) => (
+        <input type="checkbox" checked={info.getValue()} readOnly />
+      ),
+    }),
+    columnHelper.accessor("paroles", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("id_Artiste", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("credit", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("nb_ecoute", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("popularite", {
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("audio", {
+      cell: (info) => (
+        <Link href={info.getValue()} className="flex gap-1">
+          <FileAudio size={16} /> {info.getValue().substring(0, 20)}...
+        </Link>
+      ),
+    }),
+    columnHelper.accessor("Actions", {
+      cell: (info) => (
+        <div className="flex gap-1">
+          <button className="p-2 bg-blue-500 text-white">
+            <Pencil size={16} />
+          </button>
+          <button className="p-2 bg-red-500 text-white">
+            <X size={16} />
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      ),
+    }),
+  ];
+
+  return (
+    <>
+      <h1
+        className="font-bold text-6xl mb-4"
+      >
+        Titres
+      </h1>
+      <DataTable data={audioData} columns={columns} />
+    </>
   );
-}
+};
+
+export default SpotifyPortal;
