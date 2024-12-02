@@ -1,18 +1,15 @@
-import localFont from "next/font/local";
+
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
+import {Inter} from "next/font/google"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({
+  subsets: [
+    "latin",
+
+  ],
 });
 
 export const metadata = {
@@ -27,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`w-screen h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`w-screen h-screen ${inter.className}`}
       >
         <header className="px-6 h-12 flex border-b border-gray-500">
           <Link href="/" className="flex items-center">
